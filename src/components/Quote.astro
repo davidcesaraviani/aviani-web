@@ -1,0 +1,14 @@
+---
+import { ui } from '../i18n/ui';
+const t = ui[Astro.locals.lang].quote;
+---
+
+<section id="quote" class="bg-primary-100 px-6 py-[80px] xl:px-0">
+	<figure class="mx-auto flex max-w-[872px] flex-col items-center gap-6 text-center">
+		<span class="text-[72px] leading-[48px] font-semibold text-primary-500" aria-hidden="true">“</span>
+		<blockquote class="text-[28px] leading-9 font-semibold text-gray-900 sm:text-[40px] sm:leading-[52px]">
+			{t.text}
+		</blockquote>
+		<figcaption class="text-lg leading-6 font-medium text-gray-600">— {t.author}</figcaption>
+	</figure>
+</section>

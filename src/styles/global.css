@@ -1,1 +1,30 @@
 @import "tailwindcss";
+
+@theme {
+  --font-sans: "Montserrat", ui-sans-serif, system-ui, sans-serif;
+  --font-logo: "Poppins", ui-sans-serif, system-ui, sans-serif;
+
+  /* Paleta inspirada en tecso.coop: naranja de marca, marrones cálidos y crema. */
+  --color-primary-500: #ff6210;
+  --color-primary-100: #fef1e4;
+  --color-gray-900: #1c0d0a;
+  --color-gray-800: #2e1c15;
+  --color-gray-700: #4a3a33;
+  --color-gray-600: #5f524b;
+  --color-gray-500: #77695f;
+  --color-gray-400: #968a82;
+  --color-gray-100: #e5d7d1;
+  --color-gray-50: #fbf5ef;
+}
+
+@layer base {
+  html {
+    font-family: var(--font-sans);
+    color: var(--color-gray-900);
+    background: #fff;
+  }
+}
+
+html {
+  scroll-padding-top: 4rem;
+}

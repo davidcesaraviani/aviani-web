@@ -1,0 +1,85 @@
+---
+import { Image } from 'astro:assets';
+import aboutPhoto from '../assets/david-aviani.jpg';
+import downloadIcon from '../assets/about/download.svg';
+import { socials as allSocials } from '../data/socials';
+
+import { ui } from '../i18n/ui';
+const t = ui[Astro.locals.lang].about;
+
+const socials = allSocials.map((s) => ({ ...s, active: s.key === 'linkedin' }));
+const tecsoLink =
+	'<a href="https://tecso.coop/" target="_blank" rel="noopener noreferrer" class="underline decoration-primary-500 decoration-2 underline-offset-2 transition-colors hover:text-primary-500">Tecso</a>';
+const withTecso = (text: string) => text.replaceAll('Tecso', tecsoLink);
+---
+
+<section id="about" class="relative z-10 px-6 xl:px-0">
+	<div
+		class="mx-auto flex max-w-[1320px] flex-col items-center justify-center gap-12 rounded-2xl bg-white p-6 shadow-[0px_36px_52.5px_0px_rgba(43,56,76,0.1)] sm:p-12 lg:flex-row lg:gap-12 lg:p-12 xl:gap-[136px] xl:p-[112px]"
+	>
+		<div class="relative h-[504px] w-full max-w-[424px] shrink-0">
+			<div class="absolute top-0 left-0 h-[468px] w-full overflow-hidden rounded-[10px] border border-gray-50 bg-gray-50">
+				<Image
+					src={aboutPhoto}
+					alt={t.photoAlt}
+					widths={[424, 848]}
+					sizes="424px"
+					class="absolute inset-0 size-full object-cover object-top"
+				/>
+			</div>
+
+			<ul
+				class="absolute top-[432px] left-0 flex items-center justify-center rounded-[4px] bg-white p-3 shadow-[0px_12px_32px_0px_rgba(28,25,25,0.12)] sm:left-20"
+			>
+				{
+					socials.map((s) => (
+						<li>
+							<a
+								href={s.href}
+								target="_blank"
+								rel="noopener noreferrer"
+								aria-label={s.name}
+								class:list={[
+									'flex flex-col items-center justify-center rounded-[4px] p-[15px] transition-transform hover:-translate-y-0.5',
+									s.active ? 'bg-primary-500 shadow-[0px_12px_32px_0px_rgba(28,25,25,0.12)]' : 'bg-white',
+								]}
+							>
+								<img src={(s.active ? s.iconWhite : s.icon).src} alt="" class="size-[18px]" />
+							</a>
+						</li>
+					))
+				}
+			</ul>
+		</div>
+
+		<div class="flex max-w-[536px] flex-col gap-8">
+			<h2 class="text-[32px] leading-10 font-semibold text-gray-900 sm:text-[38px] sm:leading-[50px]">
+				<Fragment set:html={withTecso(t.title)} />
+			</h2>
+			<div class="flex flex-col gap-4 text-lg leading-6 text-gray-600">
+				<p>
+					<Fragment set:html={withTecso(t.p1)} />
+				</p>
+				<p>
+					{t.p2}
+				</p>
+			</div>
+			<div class="flex flex-wrap gap-4">
+				<a
+					href="#portfolio"
+					class="inline-flex items-center justify-center rounded-[4px] bg-primary-500 px-6 py-3 text-base leading-6 font-semibold whitespace-nowrap text-white transition-opacity hover:opacity-90"
+				>
+					{t.projects}
+				</a>
+				<a
+					href={t.cvHref}
+					download
+					class="inline-flex items-center justify-center gap-3 rounded-[4px] border border-primary-500 bg-white px-6 py-3 text-base leading-6 font-semibold whitespace-nowrap text-primary-500 transition-colors hover:bg-primary-100"
+				>
+					<img src={downloadIcon.src} alt="" class="size-6" />
+					{t.cv}
+				</a>
+			</div>
+		</div>
+	</div>
+</section>

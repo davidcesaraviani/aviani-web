@@ -1,0 +1,5 @@
+# Copiá este archivo a .dev.vars para desarrollo local (no se sube a git).
+# En producción cargalos con: npx wrangler secret put <NOMBRE>
+RESEND_API_KEY=
+CONTACT_TO_EMAIL=
+CONTACT_FROM_EMAIL=Aviani Web <contacto@aviani.com.ar>

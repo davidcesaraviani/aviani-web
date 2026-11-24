@@ -1,0 +1,76 @@
+---
+import notes from '../assets/process/notes.svg';
+import growthGraph from '../assets/process/growth-graph.svg';
+import pencil from '../assets/process/pencil.svg';
+import computer from '../assets/process/computer.svg';
+
+import { ui } from '../i18n/ui';
+const t = ui[Astro.locals.lang].process;
+
+const ai = t.ai;
+const icons =[notes, growthGraph, pencil, computer];
+const steps = t.steps.map((step, i) => ({ ...step, icon: icons[i], active: i === 0 }));
+---
+
+<section id="process" class="-mt-[108px] bg-gray-50 px-6 pt-[248px] pb-[140px] xl:px-0">
+	<div class="mx-auto flex max-w-[1320px] flex-col items-center gap-12 lg:flex-row lg:gap-12 xl:gap-[143px]">
+		<div class="flex max-w-[529px] flex-col gap-6 self-start lg:self-auto">
+			<h2 class="text-[40px] leading-[48px] font-semibold text-gray-900 sm:text-5xl sm:leading-[56px]">
+				{t.title}
+			</h2>
+			<div class="flex flex-col gap-4 text-lg leading-6 text-gray-500">
+				<p>
+					{t.p1}
+				</p>
+				<p>{t.p2}</p>
+			</div>
+		</div>
+
+		<ol class="grid w-full max-w-[648px] shrink-0 self-start lg:self-auto grid-cols-1 gap-6 sm:grid-cols-2">
+			{
+				steps.map((s, i) => (
+					<li
+						class:list={[
+							'flex flex-col gap-8 rounded-xl bg-white p-8',
+							s.active && 'shadow-[32px_32px_62px_0px_rgba(43,56,76,0.1)]',
+						]}
+					>
+						<span
+							class:list={[
+								'flex w-fit items-start rounded-[6px] p-5',
+								s.active ? 'bg-primary-500' : 'bg-primary-100',
+							]}
+						>
+							<img src={s.icon.src} alt="" class="size-8" />
+						</span>
+						<div class="flex flex-col gap-3 leading-6">
+							<h3 class="text-xl font-semibold text-gray-900">{s.title}</h3>
+							<p class="text-base text-gray-600">{s.description}</p>
+						</div>
+					</li>
+				))
+			}
+		</ol>
+	</div>
+
+	<div id="ai" class="mx-auto mt-24 max-w-[1320px]">
+		<div class="flex max-w-[760px] flex-col gap-4">
+			<h3 class="text-[32px] leading-10 font-semibold text-gray-900 sm:text-[40px] sm:leading-[48px]">{ai.title}</h3>
+			<p class="text-lg leading-6 text-gray-500">{ai.intro}</p>
+		</div>
+		<ul class="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-4">
+			{
+				ai.items.map((item, i) => (
+					<li class="flex flex-col gap-3 rounded-xl border border-primary-100 bg-white p-8">
+						<span class="flex size-10 items-center justify-center rounded-full bg-primary-500 text-base leading-6 font-semibold text-white">
+							{i + 1}
+						</span>
+						<h4 class="text-xl leading-6 font-semibold text-gray-900">{item.title}</h4>
+						<p class="text-base leading-6 text-gray-600">{item.description}</p>
+					</li>
+				))
+			}
+		</ul>
+		<p class="mt-8 max-w-[760px] text-base leading-6 text-gray-500">{ai.note}</p>
+	</div>
+</section>

@@ -1,0 +1,184 @@
+---
+import pinWhite from '../assets/contact/pin-white.svg';
+import pinPurple from '../assets/contact/pin-purple.svg';
+import paperPlane from '../assets/contact/paper-plane.svg';
+import { socials as allSocials } from '../data/socials';
+
+import { ui } from '../i18n/ui';
+
+const lang = Astro.locals.lang;
+const t = ui[lang].contact;
+
+const info = [
+	{ label: t.addressLabel, value: 'Rosario, Argentina', href: undefined, icon: pinWhite, active: true },
+	{
+		label: t.emailLabel,
+		value: 'david.aviani@tecso.coop',
+		href: 'mailto:david.aviani@tecso.coop',
+		icon: pinPurple,
+		active: false,
+	},
+];
+
+const socials = allSocials.map((s) => ({ ...s, active: s.key === 'facebook' }));
+
+const field =
+	'w-full border-0 border-b-[1.5px] border-gray-100 bg-transparent pb-3 text-lg leading-6 text-gray-900 outline-none transition-colors focus:border-primary-500';
+const label = 'text-lg leading-6 text-gray-500 transition-colors group-focus-within:text-primary-500';
+---
+
+<section id="contact" class="relative z-10 px-6 xl:px-0">
+	<div
+		class="mx-auto flex max-w-[1320px] flex-col justify-between gap-12 rounded-[15px] bg-white p-6 shadow-[0px_59px_62px_0px_rgba(0,0,0,0.12)] sm:p-12 lg:flex-row lg:items-center lg:p-12 xl:p-[88px]"
+	>
+		<div class="flex shrink-0 flex-col gap-[35px] lg:w-[336px] xl:w-auto">
+			<div class="flex max-w-[481px] flex-col gap-4">
+				<h2 class="text-[32px] leading-10 font-semibold text-gray-900 sm:text-[38px] sm:leading-[50px]">
+					{t.title}
+				</h2>
+				<p class="text-lg leading-6 text-gray-400">
+					{t.intro}
+				</p>
+			</div>
+
+			<ul class="flex flex-col gap-3">
+				{
+					info.map((i) => (
+						<li
+							class:list={[
+								'flex w-full max-w-[336px] items-center gap-[13px] rounded-[10px] p-3 sm:p-6',
+								i.active ? 'bg-white shadow-[0px_12px_32px_0px_rgba(28,25,25,0.12)]' : 'bg-transparent',
+							]}
+						>
+							<span
+								class:list={['flex shrink-0 items-start rounded-[4px] p-3', i.active ? 'bg-primary-500' : 'bg-primary-100']}
+							>
+								<img src={i.icon.src} alt="" class="size-6" />
+							</span>
+							<div class="flex min-w-0 flex-col gap-1">
+								<span class="text-sm leading-5 text-gray-700">{i.label}</span>
+								{i.href ? (
+									<a href={i.href} class="text-[13px] leading-6 font-medium [overflow-wrap:anywhere] text-gray-900 hover:text-primary-500 sm:text-base">
+										{i.value}
+									</a>
+								) : (
+									<span class="text-[13px] leading-6 font-medium text-gray-900 sm:text-base">{i.value}</span>
+								)}
+							</div>
+						</li>
+					))
+				}
+			</ul>
+
+			<ul class="flex gap-3">
+				{
+					socials.map((s) => (
+						<li>
+							<a
+								href={s.href}
+								target="_blank"
+								rel="noopener noreferrer"
+								aria-label={s.name}
+								class:list={[
+									'flex items-center justify-center rounded-[4px] p-[15px] transition-transform hover:-translate-y-0.5',
+									s.active ? 'bg-primary-500 shadow-[0px_12px_32px_0px_rgba(28,25,25,0.12)]' : 'bg-white',
+								]}
+							>
+								<img src={(s.active ? s.iconWhite : s.icon).src} alt="" class="size-[18px]" />
+							</a>
+						</li>
+					))
+				}
+			</ul>
+		</div>
+
+		<div class="flex w-full max-w-[560px] flex-col gap-[50px] lg:max-w-[480px] xl:max-w-[560px]">
+			<form
+				id="contact-form"
+				action="/api/contact"
+				method="post"
+				class="flex flex-col gap-[50px]"
+				data-sending={t.sending}
+				data-submit={t.submit}
+				data-success={t.success}
+				data-error={t.error}
+				data-network={t.network}
+			>
+				<input type="hidden" name="lang" value={lang} />
+				<div class="absolute -left-[9999px]" aria-hidden="true">
+					<label for="website">Website</label>
+					<input id="website" name="website" type="text" tabindex="-1" autocomplete="off" />
+				</div>
+				<div class="flex flex-col gap-6">
+					<div class="group flex flex-col gap-[14px]">
+						<label for="name" class={label}>{t.fields.name}</label>
+						<input id="name" name="name" type="text" required autocomplete="name" class={field} />
+					</div>
+					<div class="group flex flex-col gap-[14px]">
+						<label for="email" class={label}>{t.fields.email}</label>
+						<input id="email" name="email" type="email" required autocomplete="email" class={field} />
+					</div>
+					<div class="group flex flex-col gap-[14px]">
+						<label for="subject" class={label}>{t.fields.subject}</label>
+						<input id="subject" name="subject" type="text" required class={field} />
+					</div>
+					<div class="group flex flex-col gap-[14px]">
+						<label for="message" class={label}>{t.fields.message}</label>
+						<textarea id="message" name="message" rows="2" required class:list={[field, 'resize-none']}></textarea>
+					</div>
+				</div>
+
+				<div class="flex flex-col items-start gap-4">
+					<button
+						id="contact-submit"
+						type="submit"
+						class="inline-flex cursor-pointer items-center justify-center gap-3 rounded-[4px] bg-primary-500 px-6 py-3 text-base leading-6 font-semibold whitespace-nowrap text-white transition-opacity hover:opacity-90 disabled:cursor-wait disabled:opacity-60"
+					>
+						<span id="contact-submit-label">{t.submit}</span>
+						<img src={paperPlane.src} alt="" class="size-6" />
+					</button>
+					<p id="contact-status" role="status" aria-live="polite" class="min-h-6 text-base leading-6"></p>
+				</div>
+			</form>
+		</div>
+	</div>
+</section>
+
+<script>
+	const form = document.getElementById('contact-form') as HTMLFormElement | null;
+	const button = document.getElementById('contact-submit') as HTMLButtonElement | null;
+	const label = document.getElementById('contact-submit-label');
+	const status = document.getElementById('contact-status');
+
+	const setStatus = (message: string, kind: 'success' | 'error') => {
+		if (!status) return;
+		status.textContent = message;
+		status.className = `min-h-6 text-base leading-6 ${kind === 'success' ? 'text-green-700' : 'text-red-600'}`;
+	};
+
+	form?.addEventListener('submit', async (event) => {
+		event.preventDefault();
+		if (!button || !label) return;
+
+		button.disabled = true;
+		label.textContent = form.dataset.sending ?? '';
+		if (status) status.textContent = '';
+
+		try {
+			const response = await fetch(form.action, { method: 'POST', body: new FormData(form) });
+			const result = await response.json().catch(() => null);
+
+			if (response.ok && result?.ok) {
+				form.reset();
+				setStatus(form.dataset.success ?? '', 'success');
+			} else {
+				setStatus(result?.error ?? form.dataset.error ?? '', 'error');
+			}
+		} catch {
+			setStatus(form.dataset.network ?? '', 'error');
+		} finally {
+			button.disabled = false;
+			label.textContent = form.dataset.submit ?? '';
+		}
+	});
+</script>

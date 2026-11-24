@@ -1,0 +1,65 @@
+---
+import { ui } from '../i18n/ui';
+const t = ui[Astro.locals.lang].portfolio;
+
+// Fondos de color para el encabezado de cada tarjeta (clases literales para que Tailwind las detecte).
+const tones = [
+	'bg-primary-500',
+	'bg-gray-900',
+	'bg-[#3c096c]',
+	'bg-[#f15808]',
+	'bg-gray-700',
+	'bg-[#8a4b2a]',
+];
+const projects = t.projects.map((p, i) => ({ ...p, tone: tones[i % tones.length] }));
+---
+
+<section id="portfolio" class="flex flex-col items-center gap-[50px] px-6 py-[100px] xl:px-0">
+	<div class="mx-auto flex w-full max-w-[1320px] flex-col gap-[70px]">
+		<header class="flex flex-col items-center gap-6 text-center">
+			<h2 class="text-[40px] leading-[48px] font-semibold text-gray-900 sm:text-5xl sm:leading-[56px]">{t.title}</h2>
+			<p class="max-w-[660px] text-lg leading-6 text-gray-400">
+				{t.subtitle}
+			</p>
+		</header>
+
+		<ul class="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
+			{
+				projects.map((p) => (
+					<li class="flex flex-col overflow-hidden rounded-lg border border-gray-100 bg-white transition-shadow hover:shadow-[0px_12px_32px_0px_rgba(28,25,25,0.12)]">
+						<div class:list={['flex h-[160px] items-center justify-center px-6 text-center', p.tone]}>
+							{p.client === 'Tecso' ? (
+								<a
+									href="https://tecso.coop/"
+									target="_blank"
+									rel="noopener noreferrer"
+									class="text-2xl leading-8 font-semibold text-white underline decoration-2 underline-offset-4 hover:opacity-90"
+								>
+									{p.client}
+								</a>
+							) : (
+								<span class="text-2xl leading-8 font-semibold text-white">{p.client}</span>
+							)}
+						</div>
+						<div class="flex flex-1 flex-col gap-5 p-8">
+							<div class="flex flex-col gap-3">
+								<div class="flex flex-col gap-1">
+									<p class="text-xs leading-4 font-medium text-gray-400">{p.category}</p>
+									<h3 class="text-lg leading-6 font-semibold text-gray-900">{p.title}</h3>
+								</div>
+								<p class="text-sm leading-5 text-gray-600">{p.description}</p>
+							</div>
+							<ul class="mt-auto flex flex-wrap gap-2">
+								{p.tags.map((tag) => (
+									<li class="rounded-[4px] bg-primary-100 px-2.5 py-1 text-xs leading-4 font-medium text-gray-700">
+										{tag}
+									</li>
+								))}
+							</ul>
+						</div>
+					</li>
+				))
+			}
+		</ul>
+	</div>
+</section>

@@ -1,0 +1,46 @@
+---
+import { ui } from '../i18n/ui';
+const t = ui[Astro.locals.lang].footer;
+const links = [...t.links, { label: 'Tecso', href: 'https://tecso.coop/', external: true }];
+const quote = ui[Astro.locals.lang].quote;
+---
+
+<footer class="-mt-[136px] bg-[#f1f1f1] px-6 pt-[160px] pb-[50px] xl:px-0">
+	<div
+		class="mx-auto flex max-w-[1320px] flex-col items-center justify-between gap-8 lg:min-h-[120px] lg:flex-row lg:gap-[40px]"
+	>
+		<a href="#home" class="flex items-center justify-center gap-3">
+			<span
+				class="flex size-14 items-center justify-center rounded-full bg-primary-500 font-logo text-[15px] leading-[56px] font-medium tracking-tight text-white"
+				aria-hidden="true">D.C.A</span
+			>
+			<span class="text-[32px] leading-10 font-semibold whitespace-nowrap text-gray-900">David Aviani</span>
+		</a>
+
+		<nav aria-label={t.nav}>
+			<ul class="flex flex-wrap items-center justify-center">
+				{
+					links.map((l) => (
+						<li>
+							<a
+								href={l.href}
+								target={l.external ? '_blank' : undefined}
+								rel={l.external ? 'noopener noreferrer' : undefined}
+								class="block p-3 text-base leading-6 whitespace-nowrap text-gray-700 transition-colors hover:text-primary-500"
+							>
+								{l.label}
+							</a>
+						</li>
+					))
+				}
+			</ul>
+		</nav>
+
+		<p class="text-base leading-6 whitespace-nowrap text-gray-600">{t.copyright}</p>
+	</div>
+	<p
+		class="mx-auto mt-10 max-w-[1320px] border-t border-gray-100 pt-8 text-center text-base leading-6 text-gray-600 italic"
+	>
+		“{quote.text}”
+	</p>
+</footer>

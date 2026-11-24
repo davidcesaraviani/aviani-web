@@ -1,0 +1,20 @@
+---
+import arrowRight from '../assets/portfolio/arrow-right-white.svg';
+import { ui } from '../i18n/ui';
+const t = ui[Astro.locals.lang].cta;
+---
+
+<section class="bg-[#e3bfa8] px-6 py-[56px]">
+	<div class="mx-auto flex max-w-[1320px] flex-col items-center justify-center gap-6 text-center">
+		<h2 class="text-[32px] leading-10 font-semibold text-gray-900 sm:text-5xl sm:leading-[56px]">
+			{t.title[0]}<br />{t.title[1]}
+		</h2>
+		<a
+			href="#contact"
+			class="inline-flex items-center justify-center gap-3 rounded-[4px] bg-primary-500 px-6 py-3 text-base leading-6 font-semibold whitespace-nowrap text-white transition-opacity hover:opacity-90"
+		>
+			{t.button}
+			<img src={arrowRight.src} alt="" class="size-6" />
+		</a>
+	</div>
+</section>

@@ -1,0 +1,51 @@
+---
+import { ui } from '../i18n/ui';
+const t = ui[Astro.locals.lang].services;
+
+const services = t.items.map((s, i) => ({ title: s.title, active: i === 0, description: s.description }));
+---
+
+<section id="services" class="bg-gray-50 px-6 py-[100px] lg:py-[150px] xl:px-0">
+	<div class="mx-auto flex max-w-[1320px] flex-col items-center gap-12 lg:flex-row lg:gap-12 xl:gap-[143px]">
+		<div class="flex w-full max-w-[529px] shrink-0 flex-col lg:w-[380px] xl:w-[529px] items-start gap-[50px] self-start lg:self-auto">
+			<div class="flex flex-col gap-6">
+				<h2 class="text-[40px] leading-[48px] font-semibold text-[#333] sm:text-5xl sm:leading-[56px]">{t.title}</h2>
+				<div class="flex flex-col gap-4 text-lg leading-6 text-gray-400">
+					<p>
+						{t.p1}
+					</p>
+					<p>{t.p2}</p>
+				</div>
+			</div>
+			<a
+				href="#contact"
+				class="inline-flex items-center justify-center rounded-[4px] bg-primary-500 px-6 py-3 text-base leading-6 font-semibold whitespace-nowrap text-white transition-opacity hover:opacity-90"
+			>
+				{t.cta}
+			</a>
+		</div>
+
+		<ul class="flex w-full flex-col gap-6">
+			{
+				services.map((s) => (
+					<li
+						class:list={[
+							'group relative flex flex-col justify-center gap-4 overflow-hidden rounded-[6px] bg-white p-8 transition-shadow hover:shadow-[0px_32px_96px_0px_rgba(28,25,25,0.16)]',
+							s.active && 'shadow-[0px_32px_96px_0px_rgba(28,25,25,0.16)]',
+						]}
+					>
+						<span
+							class:list={[
+								'absolute top-0 left-0 h-full w-[5px] bg-primary-500 transition-opacity group-hover:opacity-100',
+								s.active ? 'opacity-100' : 'opacity-0',
+							]}
+							aria-hidden="true"
+						/>
+						<h3 class="text-2xl leading-none font-semibold text-gray-900">{s.title}</h3>
+						<p class="text-base leading-6 text-gray-700">{s.description}</p>
+					</li>
+				))
+			}
+		</ul>
+	</div>
+</section>

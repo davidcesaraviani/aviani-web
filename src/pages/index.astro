@@ -1,11 +1,48 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
+// Se renderiza en el servidor porque el idioma depende de la cookie.
+export const prerender = false;
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+import Layout from '../layouts/Layout.astro';
+import Navbar from '../components/Navbar.astro';
+import Hero from '../components/Hero.astro';
+import About from '../components/About.astro';
+import WorkProcess from '../components/WorkProcess.astro';
+import Portfolio from '../components/Portfolio.astro';
+import CallToAction from '../components/CallToAction.astro';
+import Ideas from '../components/Ideas.astro';
+import Services from '../components/Services.astro';
+import Quote from '../components/Quote.astro';
+import Contact from '../components/Contact.astro';
+import Footer from '../components/Footer.astro';
+import WhatsAppButton from '../components/WhatsAppButton.astro';
+import heroBg from '../assets/hero/bg.svg';
 ---
 
 <Layout>
-	<Welcome />
+	<Navbar />
+	<main>
+		<div class="relative">
+			<div
+				class="pointer-events-none absolute inset-x-0 top-0 bottom-[108px] hidden overflow-hidden [mask-image:linear-gradient(to_bottom,black_calc(100%_-_240px),transparent)] lg:block"
+				aria-hidden="true"
+			>
+				<img
+					src={heroBg.src}
+					alt=""
+					class="absolute -top-[899px] left-1/2 h-[9522px] w-[3004px] max-w-none -translate-x-[1155px] select-none"
+				/>
+			</div>
+			<Hero />
+			<About />
+		</div>
+		<WorkProcess />
+		<Portfolio />
+		<CallToAction />
+		<Services />
+		<Ideas />
+		<Quote />
+		<Contact />
+	</main>
+	<Footer />
+	<WhatsAppButton />
 </Layout>

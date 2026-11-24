@@ -1,0 +1,79 @@
+---
+import { Image } from 'astro:assets';
+import heroPhoto from '../assets/david-aviani.jpg';
+import statDivider from '../assets/hero/stat-divider.svg';
+import { ui } from '../i18n/ui';
+const t = ui[Astro.locals.lang].hero;
+const stats = t.stats;
+---
+
+<section id="home" class="relative">
+	<div
+		class="relative mx-auto flex max-w-[1320px] flex-col gap-12 px-6 py-12 lg:min-h-[984px] lg:flex-row lg:justify-between lg:gap-8 lg:py-0 xl:px-0"
+	>
+		<div class="flex flex-col lg:pt-[178px] lg:pb-[132px]">
+			<div class="flex flex-col gap-6">
+				<h1 class="text-5xl leading-[1.17] font-semibold text-gray-900 sm:text-[72px] sm:leading-[84px]">
+					{t.greeting}<br />David Aviani
+				</h1>
+				<p class="max-w-[648px] text-lg leading-6 text-gray-600">
+					<strong class="font-semibold text-gray-900">{t.role1}</strong>{' '}{t.and}{' '}<strong class="font-semibold text-gray-900">{t.role2}</strong>{' '}{t.outro.before}<a
+						href="https://tecso.coop"
+						target="_blank"
+						rel="noopener noreferrer"
+						class="text-gray-900 underline decoration-primary-500 decoration-2 underline-offset-2 transition-colors hover:text-primary-500"
+						>{t.outro.company}</a
+					>{t.outro.after}
+				</p>
+				<div>
+					<a
+						href="#contact"
+						class="inline-flex items-center justify-center rounded-[4px] bg-primary-500 px-6 py-3 text-base leading-6 font-semibold whitespace-nowrap text-white transition-opacity hover:opacity-90"
+					>
+						{t.cta}
+					</a>
+				</div>
+			</div>
+
+			<dl
+				class="mt-12 flex w-full max-w-[654px] items-center justify-center gap-3 rounded-[6px] border border-white bg-primary-100 lg:mt-auto"
+			>
+				{
+					stats.map((s, i) => (
+						<>
+							{i > 0 && (
+								<div class="flex h-[106px] w-[3px] shrink-0 items-center justify-center" aria-hidden="true">
+									<img src={statDivider.src} alt="" class="h-[3px] w-[106px] max-w-none shrink-0 rotate-90" />
+								</div>
+							)}
+							<div class="flex min-w-0 flex-1 flex-col gap-2 text-center">
+								<dd class="order-1 text-2xl leading-10 font-semibold text-gray-700 sm:text-[32px]">{s.value}</dd>
+								<dt class="order-2 text-sm leading-6 text-gray-500 sm:text-base">{s.label}</dt>
+							</div>
+						</>
+					))
+				}
+			</dl>
+		</div>
+
+		<div class="relative mx-auto mb-14 h-[420px] w-full max-w-[536px] shrink-0 sm:h-[636px] lg:mx-0 lg:mt-[109px] lg:h-[522px] lg:max-w-[440px] lg:self-start xl:h-[636px] xl:max-w-[536px] lg:mb-0">
+			<div
+				class="absolute inset-0 overflow-hidden rounded-[25px] bg-white shadow-[0px_24px_116px_0px_rgba(43,56,76,0.09)]"
+			>
+				<Image
+					src={heroPhoto}
+					alt={t.photoAlt}
+					widths={[450, 900]}
+					sizes="(min-width: 1280px) 536px, (min-width: 640px) 440px, 100vw"
+					loading="eager"
+					class="absolute inset-0 size-full object-cover object-top"
+				/>
+			</div>
+			<p
+				class="absolute inset-x-0 top-full mt-5 text-center text-lg leading-6 font-semibold tracking-wide text-primary-500"
+			>
+				{t.tagline}
+			</p>
+		</div>
+	</div>
+</section>
